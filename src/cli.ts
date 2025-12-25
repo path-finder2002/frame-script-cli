@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { createReadStream, createWriteStream, existsSync } from "node:fs";
-import { mkdtemp, mkdir, rm } from "node:fs/promises";
+import { chmod, mkdtemp, mkdir, readdir, rm } from "node:fs/promises";
 import { spawn } from "node:child_process";
 import https from "node:https";
 import os from "node:os";
@@ -211,6 +211,26 @@ async function runNpmInstall(cwd: string): Promise<void> {
   });
 }
 
+async function makeExecutablesUnder(dir: string): Promise<void> {
+  if (process.platform === "win32") {
+    return;
+  }
+
+  const entries = await readdir(dir, { withFileTypes: true });
+  await Promise.all(
+    entries.map(async (entry) => {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        await makeExecutablesUnder(fullPath);
+        return;
+      }
+      if (entry.isFile()) {
+        await chmod(fullPath, 0o755);
+      }
+    })
+  );
+}
+
 async function main(): Promise<void> {
   const rawName = args[0] ?? (await promptProjectName());
   if (!rawName) {
@@ -241,6 +261,7 @@ async function main(): Promise<void> {
     const binDir = path.join(targetDir, "bin");
     await mkdir(binDir, { recursive: true });
     await pipeline(createReadStream(zipPath), unzipper.Extract({ path: binDir }));
+    await makeExecutablesUnder(binDir);
   } finally {
     await rm(tmpDir, { recursive: true, force: true });
   }
