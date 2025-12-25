@@ -1,0 +1,29 @@
+{
+  "name": "@frame-script/create-latest",
+  "version": "0.2.1",
+  "description": "FrameScript project initializer",
+  "bin": {
+    "create-latest": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "tar": "^6.2.0",
+    "unzipper": "^0.12.3"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "start": "node dist/cli.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "@types/tar": "^6.1.11",
+    "@types/unzipper": "^0.10.7",
+    "typescript": "^5.5.0"
+  }
+}
