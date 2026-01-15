@@ -17,6 +17,7 @@
     "dev": "tsc -w",
     "start": "node dist/cli.js"
   },
+  "license": "MIT",
   "engines": {
     "node": ">=18"
   },
