@@ -124,7 +124,7 @@ npm run start my-test-project
 
 ## License
 
-See the FrameScript repository for license information.
+MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Contributing
 
