@@ -124,7 +124,7 @@ npm run start my-test-project
 
 ## License
 
-MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
 ## Contributing
 
